@@ -10,5 +10,4 @@ def index():
     user = flask.g.user
     return flask.render_template('index.html',
                                  user=user,
-                                 user_dict=user.dict,
                                  auth_url=get_google_authorization_url())
