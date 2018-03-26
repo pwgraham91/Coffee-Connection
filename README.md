@@ -5,11 +5,17 @@ App to help coworkers build connections across departments
 
 ### Install requirements
 
+### Make virtual environment
+`virtualenv -p python3 venv`
+
+### Source into virtual environment
+`source venv/bin/activate`
+
 #### Install Python Requirements
 `pip install -r requirements`
 
 #### Install Javascript Requirements
-`bower install`
+`yarn` (will install in /app/static/node_modules)
 
 ### Setup database
 Make sure your local database is running and open it with
@@ -20,9 +26,6 @@ Create a new database with `CREATE DATABASE coffee_connection`
 `python db_create.py`
 
 `python db_migrate.py`
-
-### Run the app
-`python run.py`
 
 ### Create config
 In the root directory, make a file called config.py using example_config.py as a template then replace all of the keys with your own
