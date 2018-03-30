@@ -5,6 +5,7 @@
         {% if g.user.admin %}
         {% endif %}
     {% endif %}
+    <div id="root"></div>
 {% endblock %}
 {% block footer %}
 <script>
@@ -12,4 +13,6 @@
         window.user = {{ user.dict | tojson }}
     {% endif %}
 </script>
+<script type="text/javascript" src="/static/js/react/dist/bundle.js"></script>
+
 {% endblock %}
