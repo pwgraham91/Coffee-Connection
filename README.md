@@ -16,6 +16,10 @@ App to help coworkers build connections across departments
 
 #### Install Javascript Requirements
 `yarn` (will install in /app/static/node_modules)
+`cd app/static/js/react && yarn`
+`npx build-react-dev`
+
+#### Build React
 
 ### Setup database
 Make sure your local database is running and open it with

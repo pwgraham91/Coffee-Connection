@@ -13,6 +13,7 @@
   },
   "scripts": {
     "less": "less-watch-compiler app/static/css app/static/css",
-    "build-react": "cd app/static/js/react && npm run build"
+    "build-react-prod": "cd app/static/js/react && npm run build",
+    "build-react-dev": "cd app/static/js/react && npx webpack"
   }
 }
