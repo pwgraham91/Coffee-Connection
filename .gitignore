@@ -8,3 +8,4 @@ app/static/.DS_Store
 app/static/bower_components
 venv
 node_modules
+dist
