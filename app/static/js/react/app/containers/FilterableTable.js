@@ -8,7 +8,7 @@ const FilterableTable = ({ filter, onFilter }) => {
     let input;
 
     return (
-        <div className={filterableTable}>
+        <div>
             <input
                 value={filter}
                 ref={node => {input = node;}}
