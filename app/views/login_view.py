@@ -19,6 +19,9 @@ def load_user(user_id):
     session = db.session
     return session.query(User).get(user_id)
 
+@app.route('/abouting')
+def about():
+    return 'abouting'
 
 @app.route('/dev-login/<int:user_id>')
 def dev_login(user_id):
