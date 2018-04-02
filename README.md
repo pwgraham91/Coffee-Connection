@@ -36,3 +36,9 @@ In the root directory, make a file called config.py using example_config.py as a
 
 ## Run the app
 `python run.py`
+
+## Test Backend
+### Test All
+`python app/test/unittest_main.py`
+### Test File
+`python path/to/file.py`
