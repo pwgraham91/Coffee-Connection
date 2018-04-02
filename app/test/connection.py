@@ -27,10 +27,13 @@ class ConnectionTestCase(unittest.TestCase):
 
         connection = Connection(user_1=u1, user_2=u2)
         db.session.add(connection)
-        db.session.commit()
+        db.session.flush()
 
-        print(connection.user_1.dict)
-        print(connection.user_2.dict)
+        self.assertEqual(connection.user_1_id, u1.id)
+        self.assertEqual(connection.user_2_id, u2.id)
+
+        self.assertEqual(connection.user_1.user_1s[0].id, connection.id)
+        self.assertEqual(connection.user_2.user_2s[0].id, connection.id)
 
 
 if __name__ == '__main__':
