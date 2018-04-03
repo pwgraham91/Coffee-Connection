@@ -35,8 +35,6 @@ class ConnectionTestCase(unittest.TestCase):
         self.assertEqual(connection.user_1.user_1s[0].id, connection.id)
         self.assertEqual(connection.user_2.user_2s[0].id, connection.id)
 
-    def test_failure(self):
-        self.assertEqual(1, 2)
 
 if __name__ == '__main__':
     unittest.main()
