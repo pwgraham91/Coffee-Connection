@@ -11,7 +11,7 @@ from urllib3.exceptions import HTTPError
 from app import app, db, login_manager
 from app.models import User
 from app.views.handlers.auth_handler import get_google_auth
-from config import Auth, ENVIRONMENT
+from config_director import Config
 
 
 @login_manager.user_loader
@@ -19,13 +19,10 @@ def load_user(user_id):
     session = db.session
     return session.query(User).get(user_id)
 
-@app.route('/abouting')
-def about():
-    return 'abouting'
 
 @app.route('/dev-login/<int:user_id>')
 def dev_login(user_id):
-    if ENVIRONMENT == 'dev':
+    if Config.ENVIRONMENT == 'dev':
         login_user(db.session.query(User).get(user_id))
     return redirect(url_for('index'))
 
