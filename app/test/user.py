@@ -30,6 +30,9 @@ class UserTestCase(unittest.TestCase):
         self.assertEqual(john.name, name)
         self.assertEqual(john.email, email)
 
+    def test_failure(self):
+        self.assertEqual(1, 2)
+
 
 if __name__ == '__main__':
     unittest.main()
