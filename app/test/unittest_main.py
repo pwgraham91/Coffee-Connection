@@ -8,5 +8,5 @@ from app.test.connection import ConnectionTestCase
 
 
 if __name__ == '__main__':
-    os.environ['TESTING'] = True
+    os.environ['TESTING'] = 'true'
     unittest.main()

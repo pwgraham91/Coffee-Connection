@@ -2,22 +2,22 @@ import flask
 
 from requests_oauthlib import OAuth2Session
 
-from config import Auth
+from config_director import Config
 
 
 def get_google_auth(state=None, token=None):
     if token:
-        return OAuth2Session(Auth.CLIENT_ID, token=token)
+        return OAuth2Session(Config.Auth.CLIENT_ID, token=token)
     if state:
         return OAuth2Session(
-            Auth.CLIENT_ID,
+            Config.Auth.CLIENT_ID,
             state=state,
-            redirect_uri=Auth.REDIRECT_URI,
+            redirect_uri=Config.Auth.REDIRECT_URI,
             scope=['email']
         )
     oauth = OAuth2Session(
         Auth.CLIENT_ID,
-        redirect_uri=Auth.REDIRECT_URI,
+        redirect_uri=Config.Auth.REDIRECT_URI,
         scope=['email']
     )
     return oauth

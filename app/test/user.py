@@ -3,14 +3,14 @@ import unittest
 
 from app import app, db
 from app.models import User
-from config import SQLALCHEMY_TEST_DATABASE_URI
+from config_director import Config
 
 
 class UserTestCase(unittest.TestCase):
     def setUp(self):
         app.config['TESTING'] = True
         app.config['WTF_CSRF_ENABLED'] = False
-        app.config['SQLALCHEMY_DATABASE_URI'] = SQLALCHEMY_TEST_DATABASE_URI
+        app.config['SQLALCHEMY_DATABASE_URI'] = Config.SQLALCHEMY_TEST_DATABASE_URI
         self.app = app.test_client()
         db.create_all()
 
@@ -29,9 +29,6 @@ class UserTestCase(unittest.TestCase):
         john = db.session.query(User).one()
         self.assertEqual(john.name, name)
         self.assertEqual(john.email, email)
-
-    def test_failure(self):
-        self.assertEqual(1, 2)
 
 
 if __name__ == '__main__':
