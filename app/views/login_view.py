@@ -1,5 +1,6 @@
 import json
 
+import datetime
 import flask
 from flask import redirect
 from flask import request
@@ -69,7 +70,8 @@ def callback():
                 user = User(
                     name=user_data['name'] or user_data['email'].split('@')[0].capitalize(),
                     email=email,
-                    avatar=user_data['picture']
+                    avatar=user_data['picture'],
+                    created_at=datetime.datetime.utcnow()
                 )
             user.tokens = json.dumps(token)
             session.add(user)
