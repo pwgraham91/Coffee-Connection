@@ -53,14 +53,14 @@ def callback():
         google = get_google_auth(state=flask_session['oauth_state'])
         try:
             token = google.fetch_token(
-                Auth.TOKEN_URI,
-                client_secret=Auth.CLIENT_SECRET,
+                Config.Auth.TOKEN_URI,
+                client_secret=Config.Auth.CLIENT_SECRET,
                 authorization_response=request.url.replace('http://', 'https://'),
             )
         except HTTPError:
             return 'HTTPError occurred.'
         google = get_google_auth(token=token)
-        resp = google.get(Auth.USER_INFO)
+        resp = google.get(Config.Auth.USER_INFO)
         if resp.status_code == 200:
             user_data = resp.json()
             email = user_data['email']
