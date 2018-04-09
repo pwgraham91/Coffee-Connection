@@ -2,18 +2,32 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import Greeting from './Greeting';
+import { Link } from 'react-router-dom';
 
 class ProfilePage extends React.Component {
+  fetchUserData(userID) {
+    fetch(`/api/user/${userID}`)
+    .then(response => response.json())
+    .then(data => this.setState(data))
+  }
+
   componentDidMount() {
-    fetch(`/api/user/${this.props.match.params.number}`)
-      .then(response => response.json())
-      .then(data => this.setState(data))
+    console.log('on mount fetch')
+    this.fetchUserData(this.props.match.params.number)
+  }
+
+  componentWillReceiveProps(nextProps) {
+    console.log('on next props fetch')
+    this.fetchUserData(nextProps.match.params.number)
   }
 
   render() {
+    console.log('this user is ', this.props.match.params.number)
+    console.log('details', this.state)
     return (
       <div>
         <Greeting userID={this.props.match.params.number} userDetails={this.state} />
+        <Link to={`/profile/${parseInt(this.props.match.params.number) + 1}`}>Next user</Link>
       </div>
     )
   }
