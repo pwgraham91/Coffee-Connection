@@ -2,27 +2,21 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 
-class Greeting extends React.Component {
+export default class Greeting extends React.Component {
   isCurrentUser() {
-    return window.user && this.props.match.params.number == window.user.id
+    return window.user && parseInt(this.props.userID) === parseInt(window.user.id)
   }
 
   renderGreeting() {
-    if (this.state) {
+    if (this.props.userDetails) {
       if (this.isCurrentUser()) {
-        return <h1>Hi, {this.state.name}</h1>
+        return <h1>Hi, {this.props.userDetails.name}</h1>
       } else {
-        return <h1>{this.state.name}</h1>
+        return <h1>{this.props.userDetails.name}</h1>
       }
     } else {
       return <div></div>
     }
-  }
-
-  componentDidMount() {
-    fetch(`/api/user/${this.props.match.params.number}`)
-    .then(response => response.json())
-    .then(data => this.setState(data))
   }
 
   render() {
@@ -36,6 +30,7 @@ class Greeting extends React.Component {
 }
 
 Greeting.propTypes = {
-  userState: PropTypes.object
+  userID: PropTypes.string,
+  userDetails: PropTypes.object
 };
 

@@ -1,24 +1,9 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
+import Greeting from './Greeting';
 
 class ProfilePage extends React.Component {
-  isCurrentUser(profileNumber) {
-    return window.user && this.props.match.params.number == window.user.id
-  }
-
-  renderGreeting() {
-    if (this.state) {
-      if (this.isCurrentUser()) {
-        return <h1>Hi, {this.state.name}</h1>
-      } else {
-        return <h1>{this.state.name}</h1>
-      }
-    } else {
-      return <h1>Loading</h1>
-    }
-  }
-
   componentDidMount() {
     fetch(`/api/user/${this.props.match.params.number}`)
       .then(response => response.json())
@@ -26,10 +11,9 @@ class ProfilePage extends React.Component {
   }
 
   render() {
-    const greeting = this.renderGreeting();
     return (
       <div>
-        {greeting}
+        <Greeting userID={this.props.match.params.number} userDetails={this.state} />
       </div>
     )
   }
