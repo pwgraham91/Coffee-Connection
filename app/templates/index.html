@@ -1,10 +1,5 @@
 {% extends "base.html" %}
 {% block content %}
-    {% if g.user.is_authenticated %}
-        <h1>Hi, {{ user.name }}!</h1>
-        {% if g.user.admin %}
-        {% endif %}
-    {% endif %}
     <div id="root"></div>
 {% endblock %}
 {% block footer %}

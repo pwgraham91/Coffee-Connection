@@ -11,4 +11,5 @@ def make_connections():
     current_user = flask.g.user
 
     if not current_user.is_admin:
+        # todo generate connections here based on users who haven't connected yet and are available for connection
         raise Exception('no access')
