@@ -16,7 +16,7 @@ def get_google_auth(state=None, token=None):
             scope=['email']
         )
     oauth = OAuth2Session(
-        Auth.CLIENT_ID,
+        Config.Auth.CLIENT_ID,
         redirect_uri=Config.Auth.REDIRECT_URI,
         scope=['email']
     )
@@ -31,7 +31,7 @@ def get_google_authorization_url():
 
     google = get_google_auth()
 
-    auth_url, state = google.authorization_url(Auth.AUTH_URI)
+    auth_url, state = google.authorization_url(Config.Auth.AUTH_URI)
 
     flask.session['oauth_state'] = state
     return auth_url
