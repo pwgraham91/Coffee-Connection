@@ -12,18 +12,14 @@ class ProfilePage extends React.Component {
   }
 
   componentDidMount() {
-    console.log('on mount fetch')
     this.fetchUserData(this.props.match.params.number)
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log('on next props fetch')
     this.fetchUserData(nextProps.match.params.number)
   }
 
   render() {
-    console.log('this user is ', this.props.match.params.number)
-    console.log('details', this.state)
     return (
       <div>
         <Greeting userID={this.props.match.params.number} userDetails={this.state} />
