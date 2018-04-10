@@ -3,6 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Greeting from './Greeting';
 import { Link } from 'react-router-dom';
+import Connections from "../connections/Connections";
 
 class ProfilePage extends React.Component {
   fetchUserData(userID) {
@@ -11,19 +12,26 @@ class ProfilePage extends React.Component {
     .then(data => this.setState(data))
   }
 
+  constructor(props) {
+    super(props);
+    this.userID = this.props.match.params.number;
+  }
+
   componentDidMount() {
     this.fetchUserData(this.props.match.params.number)
   }
 
   componentWillReceiveProps(nextProps) {
-    this.fetchUserData(nextProps.match.params.number)
+    this.userID = nextProps.match.params.number;
+    this.fetchUserData(this.userID)
   }
 
   render() {
     return (
       <div>
-        <Greeting userID={this.props.match.params.number} userDetails={this.state} />
-        <Link to={`/profile/${parseInt(this.props.match.params.number) + 1}`}>Next user</Link>
+        <Greeting userID={this.userID} userDetails={this.state} />
+        <Link to={`/profile/${parseInt(this.userID) + 1}`}>Next user</Link>
+        <Connections userID={this.userID} userDetails={this.state} />
       </div>
     )
   }

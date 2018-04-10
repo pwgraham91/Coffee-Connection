@@ -36,7 +36,8 @@ class User(db.Model):
             'admin': self.admin,
             'avatar': self.avatar,
             'active': self.active,
-            'created_at': str(self.created_at) if self.created_at else None
+            'created_at': str(self.created_at) if self.created_at else None,
+            'connections': [cxn.dict for cxn in self.user_1s] + [cxn.dict for cxn in self.user_2s]
         }
 
 
@@ -49,3 +50,16 @@ class Connection(db.Model):
 
     user_1 = db.relationship("User", foreign_keys=[user_1_id], backref=sqlalchemy.orm.backref('user_1s'))
     user_2 = db.relationship("User", foreign_keys=[user_2_id], backref=sqlalchemy.orm.backref('user_2s'))
+
+    @property
+    def dict(self):
+        return {
+            'user_1': {
+                'id': self.user_1_id,
+                'name': self.user_1.name
+            },
+            'user_2': {
+                'id': self.user_2_id,
+                'name': self.user_2.name
+            }
+        }
