@@ -7,6 +7,7 @@ import {isCurrentUser} from "../../lib/user";
 export default class Connections extends React.Component {
   showGenerateConnections() {
     if (isCurrentUser(this.props.userID) && window.user.admin) {
+      // todo pass up new connections from generate to here to pass down to existing
       return (
         <GenerateConnections userID={this.props.userID} userDetails={this.props.userDetails} />
       )

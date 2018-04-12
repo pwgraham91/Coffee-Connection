@@ -7,7 +7,11 @@ export default class ExistingConnections extends React.Component {
       return null
     }
     return userDetails.connections.map((connection) => {
-      return <li>{connection.user_1.name}</li>
+      if (userDetails.id === connection.user_1.id) {
+        return <li>{connection.user_2.name}</li>
+      } else {
+        return <li>{connection.user_1.name}</li>
+      }
     })
   }
 
