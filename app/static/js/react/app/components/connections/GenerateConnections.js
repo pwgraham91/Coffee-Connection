@@ -3,8 +3,21 @@ import React from 'react';
 
 export default class GenerateConnections extends React.Component {
   onClickGenerateConnections() {
-    // todo do fetch here to generate connections
-    console.log('generator')
+    fetch(
+      '/api/connections/generate_connections',
+      {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        }
+      }
+    )
+    .then(response => response.json())
+    .then(data => {
+      console.log('generated', data)
+    })
   }
 
   render() {

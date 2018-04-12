@@ -1,15 +1,18 @@
 import flask
-from flask_login import login_required
+import flask_login
+import json
 
 from app import app, db
 
 
-@app.route('/make_connections', methods=['POST'])
-@login_required
+@app.route('/api/connections/generate_connections', methods=['POST'])
+@flask_login.login_required
 def make_connections():
     session = db.session
-    current_user = flask.g.user
 
-    if not current_user.is_admin:
+    if not flask_login.current_user.admin:
         # todo generate connections here based on users who haven't connected yet and are available for connection
         raise Exception('no access')
+    return flask.Response(json.dumps({
+        'success': True
+    }), mimetype=u'application/json')

@@ -8,8 +8,8 @@ import Connections from "../connections/Connections";
 class ProfilePage extends React.Component {
   fetchUserData(userID) {
     fetch(`/api/user/${userID}`)
-    .then(response => response.json())
-    .then(data => this.setState(data))
+      .then(response => response.json())
+      .then(data => this.setState(data))
   }
 
   constructor(props) {

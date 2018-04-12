@@ -12,7 +12,6 @@ export default class ExistingConnections extends React.Component {
   }
 
   render() {
-    console.log(this.props.userDetails)
     return (
       <div>
         <h1>existing</h1>
