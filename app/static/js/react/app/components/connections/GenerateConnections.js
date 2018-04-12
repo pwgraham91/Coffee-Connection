@@ -8,10 +8,6 @@ export default class GenerateConnections extends React.Component {
       {
         method: 'POST',
         credentials: 'include',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-        }
       }
     )
     .then(response => response.json())

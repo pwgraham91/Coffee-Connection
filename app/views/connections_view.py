@@ -6,9 +6,11 @@ from app import app, db
 
 
 @app.route('/api/connections/generate_connections', methods=['POST'])
-@flask_login.login_required
 def make_connections():
     session = db.session
+
+    if not flask_login.current_user.is_authenticated:
+        return 'Unauthorized', 403
 
     if not flask_login.current_user.admin:
         # todo generate connections here based on users who haven't connected yet and are available for connection
