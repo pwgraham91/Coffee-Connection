@@ -21,7 +21,11 @@ def generate_connections(session):
         available_user_ids = active_user_ids.copy()
         available_user_ids = available_user_ids - chosen_user_ids
 
-        # todo here is where i would remove future users based on previous connections
+        for previous_connection in user.user_1s:
+            available_user_ids.discard(previous_connection.user_2.id)
+
+        for previous_connection in user.user_2s:
+            available_user_ids.discard(previous_connection.user_1.id)
 
         if len(available_user_ids) == 0:
             continue
