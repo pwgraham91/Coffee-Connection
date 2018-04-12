@@ -2,7 +2,12 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 export default class GenerateConnections extends React.Component {
+  constructor(props) {
+    super(props)
+    this.onClickGenerateConnections = this.onClickGenerateConnections.bind(this)
+  }
   onClickGenerateConnections() {
+    const onGeneration = this.props.onGeneration
     fetch(
       '/api/connections/generate_connections',
       {
@@ -12,7 +17,7 @@ export default class GenerateConnections extends React.Component {
     )
     .then(response => response.json())
     .then(data => {
-      console.log('generated', data)
+      onGeneration(data)
     })
   }
 
@@ -26,7 +31,7 @@ export default class GenerateConnections extends React.Component {
 }
 
 GenerateConnections.propTypes = {
-  userID: PropTypes.string,
-  userDetails: PropTypes.object
+  userDetails: PropTypes.object,
+  onGeneration: PropTypes.func
 };
 

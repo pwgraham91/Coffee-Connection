@@ -16,12 +16,7 @@ def make_connections():
     if not flask_login.current_user.admin:
         raise Exception('no access')
 
-    try:
-        generate_connections(session)
-        session.commit()
-    except Exception as e:
-        pass
+    generate_connections(session)
+    session.commit()
 
-    return flask.Response(json.dumps({
-        'success': True
-    }), mimetype=u'application/json')
+    return flask.Response(json.dumps(flask_login.current_user.dict), mimetype=u'application/json')
