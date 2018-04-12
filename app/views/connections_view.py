@@ -3,6 +3,7 @@ import flask_login
 import json
 
 from app import app, db
+from app.lib.connection import generate_connections
 
 
 @app.route('/api/connections/generate_connections', methods=['POST'])
@@ -13,8 +14,14 @@ def make_connections():
         return 'Unauthorized', 403
 
     if not flask_login.current_user.admin:
-        # todo generate connections here based on users who haven't connected yet and are available for connection
         raise Exception('no access')
+
+    try:
+        generate_connections(session)
+        session.commit()
+    except Exception as e:
+        pass
+
     return flask.Response(json.dumps({
         'success': True
     }), mimetype=u'application/json')
