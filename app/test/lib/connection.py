@@ -34,9 +34,7 @@ class ConnectionLibTestCase(unittest.TestCase):
                 self.assertNotIn(match, cant_match_with)
                 cant_match_with.append(match)
 
-        # assert that the user with the most matches only has one more match than the user with the lowest amount of
-        # matches
-        self.assertLessEqual(max(map(len, user_matches.values())), min(map(len, user_matches.values())) + 1)
+        return user_matches
 
     def test_make_connection_even_num_all_active(self):
         user_matches = {}
@@ -56,9 +54,14 @@ class ConnectionLibTestCase(unittest.TestCase):
         self.session.add(u4)
         user_matches[u4.name] = []
 
-        for i in range(len(user_matches.keys()) + 1):
+        returned_user_matches = {}
+        for i in range(len(user_matches.keys()) + 10):
             generate_connections(self.session)
-            self.validate_connections(deepcopy(user_matches))
+            returned_user_matches = self.validate_connections(deepcopy(user_matches))
+
+        # assert that everyone has the same number of matches
+        self.assertLessEqual(max(map(len, returned_user_matches.values())),
+                             min(map(len, returned_user_matches.values())))
 
     def test_make_connection_even_num_all_active_6(self):
         user_matches = {}
@@ -86,9 +89,48 @@ class ConnectionLibTestCase(unittest.TestCase):
         self.session.add(u6)
         user_matches[u6.name] = []
 
-        for i in range(len(user_matches.keys()) + 1):
+        returned_user_matches = {}
+        for i in range(len(user_matches.keys()) + 10):
             generate_connections(self.session)
-            self.validate_connections(deepcopy(user_matches))
+            returned_user_matches = self.validate_connections(deepcopy(user_matches))
+
+        # assert that everyone has the same number of matches
+        self.assertLessEqual(max(map(len, returned_user_matches.values())),
+                             min(map(len, returned_user_matches.values())))
+
+    def test_make_connection_even_num_all_active_6_one_inactive(self):
+        user_matches = {}
+        u1 = User(name='john', email='john@example.com')
+        self.session.add(u1)
+        user_matches[u1.name] = []
+
+        u2 = User(name='mike', email='mike@example.com')
+        self.session.add(u2)
+        user_matches[u2.name] = []
+
+        u3 = User(name='joe', email='joe@example.com')
+        self.session.add(u3)
+        user_matches[u3.name] = []
+
+        u4 = User(name='steve', email='steve@example.com')
+        self.session.add(u4)
+        user_matches[u4.name] = []
+
+        u5 = User(name='fred', email='fred@example.com')
+        self.session.add(u5)
+        user_matches[u5.name] = []
+
+        u6 = User(name='adam', email='adam@example.com', active=False)
+        self.session.add(u6)
+
+        returned_user_matches = {}
+        for i in range(len(user_matches.keys()) + 10):
+            generate_connections(self.session)
+            returned_user_matches = self.validate_connections(deepcopy(user_matches))
+
+        # assert that everyone has the same number of matches
+        self.assertLessEqual(max(map(len, returned_user_matches.values())),
+                             min(map(len, returned_user_matches.values())))
 
 
 if __name__ == '__main__':
