@@ -5,7 +5,6 @@ import datetime
 from app.models import User, Connection
 
 
-# todo write tests for this
 def generate_connections(session):
     active_users = session.query(User).filter(
         User.active.is_(True)
