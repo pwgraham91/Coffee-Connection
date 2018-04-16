@@ -7,8 +7,8 @@ from . import load_views
 
 
 @login_manager.user_loader
-def load_user(id):
-    return User.query.get(int(id))
+def load_user(_id):
+    return User.query.get(int(_id))
 
 
 @app.before_request
