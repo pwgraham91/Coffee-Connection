@@ -10,7 +10,7 @@ from config_director import Config
 def create_test_users(session):
     fake = Faker()
 
-    for i in range(50):
+    for _ in range(50):
         person = User(
             name=fake.name(),
             email=fake.email(),
