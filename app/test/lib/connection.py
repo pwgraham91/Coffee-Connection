@@ -56,7 +56,7 @@ class ConnectionLibTestCase(unittest.TestCase):
         user_matches[u4.name] = []
 
         returned_user_matches = {}
-        for i in range(len(user_matches.keys()) + 10):
+        for _ in range(len(user_matches.keys()) + 10):
             generate_connections(self.session)
             returned_user_matches = self.validate_connections(deepcopy(user_matches))
 
@@ -92,7 +92,7 @@ class ConnectionLibTestCase(unittest.TestCase):
         user_matches[u6.name] = []
 
         returned_user_matches = {}
-        for i in range(len(user_matches.keys()) + 10):
+        for _ in range(len(user_matches.keys()) + 10):
             generate_connections(self.session)
             returned_user_matches = self.validate_connections(deepcopy(user_matches))
 
@@ -127,7 +127,7 @@ class ConnectionLibTestCase(unittest.TestCase):
         self.session.add(u6)
 
         returned_user_matches = {}
-        for i in range(len(user_matches.keys()) + 10):
+        for _ in range(len(user_matches.keys()) + 10):
             generate_connections(self.session)
             returned_user_matches = self.validate_connections(deepcopy(user_matches))
 
