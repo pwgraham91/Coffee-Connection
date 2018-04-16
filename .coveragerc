@@ -1,5 +1,5 @@
 [report]
 omit =
-    venv*
+    venv/*
     db_repository/*
     app/scripts/*
