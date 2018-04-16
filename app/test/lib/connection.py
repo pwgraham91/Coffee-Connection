@@ -3,7 +3,7 @@ import unittest
 from copy import deepcopy
 
 from app import app, db
-from app.lib.connection import generate_connections
+from app.lib.connection import generate_connections, get_available_connections
 from app.models import User, Connection
 from config_director import Config
 
@@ -132,6 +132,49 @@ class ConnectionLibTestCase(unittest.TestCase):
         self.assertLessEqual(max(map(len, returned_user_matches.values())),
                              min(map(len, returned_user_matches.values())))
 
+    def test_get_available_connections(self):
+        users = []
+        u1 = User(name='john', email='john@example.com')
+        self.session.add(u1)
+        users.append(u1)
+
+        u2 = User(name='mike', email='mike@example.com')
+        self.session.add(u2)
+        users.append(u2)
+
+        u3 = User(name='joe', email='joe@example.com')
+        self.session.add(u3)
+        users.append(u3)
+
+        u4 = User(name='steve', email='steve@example.com')
+        self.session.add(u4)
+        users.append(u4)
+
+        self.session.flush()
+
+        available_user_ids = {user.id for user in users}
+
+        # first, test that with no connections, everyone is fair game
+        available_user_ids_after_discard = get_available_connections(available_user_ids, u1)
+        self.assertEqual(available_user_ids_after_discard, {u2.id, u3.id, u4.id})
+
+        # second, test that if there's a connection, that user gets removed
+        cxn = Connection(user_1_id=u1.id, user_2_id=u2.id)
+        self.session.add(cxn)
+        # for the backrefs
+        self.session.commit()
+
+        available_user_ids_after_discard = get_available_connections(available_user_ids, u1)
+        self.assertEqual(available_user_ids_after_discard, {u3.id, u4.id})
+
+        # third, add a connection with u3 as user_1 and u1 as user_2
+        cxn = Connection(user_1_id=u3.id, user_2_id=u1.id)
+        self.session.add(cxn)
+        # for the backrefs
+        self.session.commit()
+
+        available_user_ids_after_discard = get_available_connections(available_user_ids, u1)
+        self.assertEqual(available_user_ids_after_discard, {u4.id})
 
 if __name__ == '__main__':
     unittest.main()

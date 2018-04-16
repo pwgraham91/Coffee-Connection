@@ -5,15 +5,19 @@ import datetime
 from app.models import User, Connection
 
 
-def discard_previous_connections_from_set(available_user_ids, user):
+def get_available_connections(available_user_ids, user):
     """
-    Iterate through each of the users previous connections and remove the user ids from set of available ids.
-
-    :param available_user_ids: set of integers
+    takes a list of active user ids and a user and returns a list of available user ids
+    :param available_user_ids: Set of integers
     :param user: User
     :return Set: modified copy of original available_user_ids
     """
     available_user_ids_copy = available_user_ids.copy()
+
+    # This line is sort of redundant because we remove the current user from chosen_user_ids in generate_connections
+    # but we need that line to make sure we don't add the user as a user_2 connection as well. We need this line here
+    # to make the function reusable and make sense.
+    available_user_ids_copy.discard(user.id)
 
     for previous_connection in user.user_1s:
         available_user_ids_copy.discard(previous_connection.user_2.id)
@@ -25,6 +29,9 @@ def discard_previous_connections_from_set(available_user_ids, user):
 
 
 def generate_connections(session):
+    """ Iterate through all users and generate connections. Each connection made should include users who have never
+        been connected before.
+    """
     active_users = session.query(User).filter(
         User.active.is_(True)
     ).all()
@@ -40,7 +47,7 @@ def generate_connections(session):
         # this user will be chosen as user_1 for this connection, add them to the chosen list
         chosen_user_ids.update({user.id})
 
-        available_user_ids = discard_previous_connections_from_set(active_user_ids - chosen_user_ids, user)
+        available_user_ids = get_available_connections(active_user_ids - chosen_user_ids, user)
 
         if len(available_user_ids) == 0:
             continue
