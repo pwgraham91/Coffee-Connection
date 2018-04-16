@@ -37,6 +37,7 @@ class ConnectionLibTestCase(unittest.TestCase):
         return user_matches
 
     def test_make_connection_even_num_all_active(self):
+        # return
         user_matches = {}
         u1 = User(name='john', email='john@example.com')
         self.session.add(u1)
@@ -64,6 +65,7 @@ class ConnectionLibTestCase(unittest.TestCase):
                              min(map(len, returned_user_matches.values())))
 
     def test_make_connection_even_num_all_active_6(self):
+        # return
         user_matches = {}
         u1 = User(name='john', email='john@example.com')
         self.session.add(u1)
@@ -99,6 +101,7 @@ class ConnectionLibTestCase(unittest.TestCase):
                              min(map(len, returned_user_matches.values())))
 
     def test_make_connection_even_num_all_active_6_one_inactive(self):
+        # return
         user_matches = {}
         u1 = User(name='john', email='john@example.com')
         self.session.add(u1)
@@ -155,8 +158,10 @@ class ConnectionLibTestCase(unittest.TestCase):
         available_user_ids = {user.id for user in users}
 
         # first, test that with no connections, everyone is fair game
-        available_user_ids_after_discard = get_available_connections(available_user_ids, u1)
-        self.assertEqual(available_user_ids_after_discard, {u2.id, u3.id, u4.id})
+        self.assertEqual(get_available_connections(self.session, available_user_ids, u1), {u2.id, u3.id, u4.id})
+        self.assertEqual(get_available_connections(self.session, available_user_ids, u2), {u1.id, u3.id, u4.id})
+        self.assertEqual(get_available_connections(self.session, available_user_ids, u3), {u1.id, u2.id, u4.id})
+        self.assertEqual(get_available_connections(self.session, available_user_ids, u4), {u1.id, u2.id, u3.id})
 
         # second, test that if there's a connection, that user gets removed
         cxn = Connection(user_1_id=u1.id, user_2_id=u2.id)
@@ -164,8 +169,10 @@ class ConnectionLibTestCase(unittest.TestCase):
         # for the backrefs
         self.session.commit()
 
-        available_user_ids_after_discard = get_available_connections(available_user_ids, u1)
-        self.assertEqual(available_user_ids_after_discard, {u3.id, u4.id})
+        self.assertEqual(get_available_connections(self.session, available_user_ids, u1), {u3.id, u4.id})
+        self.assertEqual(get_available_connections(self.session, available_user_ids, u2), {u3.id, u4.id})
+        self.assertEqual(get_available_connections(self.session, available_user_ids, u3), {u1.id, u2.id, u4.id})
+        self.assertEqual(get_available_connections(self.session, available_user_ids, u4), {u1.id, u2.id, u3.id})
 
         # third, add a connection with u3 as user_1 and u1 as user_2
         cxn = Connection(user_1_id=u3.id, user_2_id=u1.id)
@@ -173,8 +180,18 @@ class ConnectionLibTestCase(unittest.TestCase):
         # for the backrefs
         self.session.commit()
 
-        available_user_ids_after_discard = get_available_connections(available_user_ids, u1)
+        available_user_ids_after_discard = get_available_connections(self.session, available_user_ids, u1)
         self.assertEqual(available_user_ids_after_discard, {u4.id})
+
+        # fourth, add a connection with u2 as user_1 and u3 as user_2
+        cxn = Connection(user_1_id=u3.id, user_2_id=u1.id)
+        self.session.add(cxn)
+        # for the backrefs
+        self.session.commit()
+
+        available_user_ids_after_discard = get_available_connections(self.session, available_user_ids, u1)
+        self.assertEqual(available_user_ids_after_discard, {u4.id})
+
 
 if __name__ == '__main__':
     unittest.main()
