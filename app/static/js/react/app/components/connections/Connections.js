@@ -41,7 +41,6 @@ export default class Connections extends React.Component {
   }
 
   render() {
-    console.log('current state', this.state)
     return (
       <div>
         <h2>Connections</h2>

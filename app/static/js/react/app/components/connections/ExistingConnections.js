@@ -28,6 +28,17 @@ export default class ExistingConnections extends React.Component {
     }
   }
 
+  renderPastConnections(userId, connections) {
+    if (connections) {
+      return (
+        <div>
+          <h3>Previous Connections</h3>
+          <ul>{this.listConnections(this.props.userDetails.id, this.props.userDetails.connections)}</ul>
+        </div>
+      )
+    }
+  }
+
   render() {
     if (this.props.userDetails) {
       const sortedConnections = orderBy(this.props.userDetails.connections, ['id'], ['desc']);
@@ -35,7 +46,7 @@ export default class ExistingConnections extends React.Component {
       return (
         <div>
           {this.renderCurrentConnection(this.props.userDetails.id, currentConnection)}
-          <ul>{this.listConnections(this.props.userDetails.id, this.props.userDetails.connections)}</ul>
+          {this.renderPastConnections(this.props.userDetails.id, currentConnection)}
         </div>
       )
     } else {
