@@ -61,5 +61,6 @@ class Connection(db.Model):
             'user_2': {
                 'id': self.user_2_id,
                 'name': self.user_2.name
-            }
+            },
+            'id': self.id,
         }
