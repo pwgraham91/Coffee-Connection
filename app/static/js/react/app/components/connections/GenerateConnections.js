@@ -1,5 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import Button from '@material-ui/core/Button';
+
 
 export default class GenerateConnections extends React.Component {
   constructor(props) {
@@ -23,9 +25,9 @@ export default class GenerateConnections extends React.Component {
 
   render() {
     return (
-      <div>
-        <button onClick={this.onClickGenerateConnections}>Generate Connections</button>
-      </div>
+      <Button variant="raised" color="primary" onClick={this.onClickGenerateConnections}>
+        Generate Connections
+      </Button>
     )
   }
 }

@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import Greeting from './Greeting';
 import { Link } from 'react-router-dom';
 import Connections from "../connections/Connections";
+import Button from '@material-ui/core/Button';
+
 
 class ProfilePage extends React.Component {
   fetchUserData(userID) {
@@ -30,7 +32,11 @@ class ProfilePage extends React.Component {
     return (
       <div>
         <Greeting userID={this.userID} userDetails={this.state} />
-        <Link to={`/profile/${parseInt(this.userID) + 1}`}>Next user</Link>
+        <Link to={`/profile/${parseInt(this.userID) + 1}`}>
+          <Button variant="raised" color="primary">
+            Next user
+          </Button>
+        </Link>
         <Connections userID={this.userID} userDetails={this.state} />
       </div>
     )

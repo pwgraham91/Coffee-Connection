@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { orderBy } from "lodash";
+import Connection from "./Connection";
 
 export default class ExistingConnections extends React.Component {
   listConnections(userId, connections) {
@@ -11,9 +12,9 @@ export default class ExistingConnections extends React.Component {
 
   renderConnection(userId, connection) {
     if (userId === connection.user_1.id) {
-      return <li key={connection.user_2.id}>{connection.user_2.name}</li>
+      return <Connection key={connection.user_2.id} user={connection.user_2} />
     } else {
-      return <li key={connection.user_1.id}>{connection.user_1.name}</li>
+      return <Connection key={connection.user_1.id} user={connection.user_1} />
     }
   }
 
@@ -42,6 +43,8 @@ export default class ExistingConnections extends React.Component {
   render() {
     if (this.props.userDetails) {
       const sortedConnections = orderBy(this.props.userDetails.connections, ['id'], ['desc']);
+      console.log('check the sorted connections', sortedConections)
+      // todo check that the shift removes the connection
       const currentConnection = sortedConnections.shift();
       return (
         <div>

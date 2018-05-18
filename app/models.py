@@ -29,7 +29,10 @@ class User(db.Model):
 
     @property
     def dict(self):
-        return {
+        return self.user_dict()
+
+    def user_dict(self, with_connections=True):
+        info = {
             'id': self.id,
             'name': self.name,
             'email': self.email,
@@ -37,8 +40,12 @@ class User(db.Model):
             'avatar': self.avatar,
             'active': self.active,
             'created_at': str(self.created_at) if self.created_at else None,
-            'connections': [cxn.dict for cxn in self.user_1s] + [cxn.dict for cxn in self.user_2s]
         }
+
+        if with_connections:
+            info['connections'] = [cxn.dict for cxn in self.user_1s] + [cxn.dict for cxn in self.user_2s]
+
+        return info
 
 
 class Connection(db.Model):
@@ -54,13 +61,7 @@ class Connection(db.Model):
     @property
     def dict(self):
         return {
-            'user_1': {
-                'id': self.user_1_id,
-                'name': self.user_1.name
-            },
-            'user_2': {
-                'id': self.user_2_id,
-                'name': self.user_2.name
-            },
+            'user_1': self.user_1.user_dict(with_connections=False),
+            'user_2': self.user_2.user_dict(with_connections=False),
             'id': self.id,
         }
