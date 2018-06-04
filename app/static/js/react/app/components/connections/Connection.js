@@ -3,6 +3,7 @@ import React from 'react';
 import Chip from '@material-ui/core/Chip';
 import Avatar from '@material-ui/core/Avatar';
 import { Redirect } from 'react-router-dom';
+import { getNameInitials } from "../../lib/user";
 
 export default class Connection extends React.Component {
   constructor(props) {
@@ -19,19 +20,8 @@ export default class Connection extends React.Component {
         <Avatar src={user.avatar} />
       )
     } else {
-      return <Avatar>{this.getNameInitials(user.name)}</Avatar>
+      return <Avatar>{getNameInitials(user.name)}</Avatar>
     }
-  }
-
-  getNameInitials(name) {
-    let initials = ''
-    for (let i = 0; i < name.length; i++) {
-      const previousIndex = i - 1
-      if (previousIndex < 0 || name[previousIndex] === ' ') {
-        initials += name[i]
-      }
-    }
-    return initials
   }
 
   render() {
@@ -45,6 +35,9 @@ export default class Connection extends React.Component {
             avatar={this.renderAvatar(this.props.user)}
             label={this.props.user.name}
             onClick={() => this.navigateToUser(this.props.user.id)}
+            style={{
+              margin: '5px'
+            }}
           />
         )
       }

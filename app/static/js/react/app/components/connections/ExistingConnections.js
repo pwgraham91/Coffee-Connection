@@ -23,7 +23,7 @@ export default class ExistingConnections extends React.Component {
       return (
         <div>
           <h3>Current Connection</h3>
-          <ul>{this.renderConnection(userId, connection)}</ul>
+          <div>{this.renderConnection(userId, connection)}</div>
         </div>
       )
     }
@@ -34,7 +34,10 @@ export default class ExistingConnections extends React.Component {
       return (
         <div>
           <h3>Previous Connections</h3>
-          <ul>{this.listConnections(this.props.userDetails.id, this.props.userDetails.connections)}</ul>
+          <div style={{
+            display: 'flex',
+            flexWrap: 'wrap'
+          }}>{this.listConnections(this.props.userDetails.id, connections)}</div>
         </div>
       )
     }
@@ -42,14 +45,12 @@ export default class ExistingConnections extends React.Component {
 
   render() {
     if (this.props.userDetails) {
-      const sortedConnections = orderBy(this.props.userDetails.connections, ['id'], ['desc']);
-      console.log('check the sorted connections', sortedConections)
-      // todo check that the shift removes the connection
+      const sortedConnections = orderBy(this.props.userDetails.connections, ['id'], ['asc']);
       const currentConnection = sortedConnections.shift();
       return (
         <div>
           {this.renderCurrentConnection(this.props.userDetails.id, currentConnection)}
-          {this.renderPastConnections(this.props.userDetails.id, currentConnection)}
+          {this.renderPastConnections(this.props.userDetails.id, sortedConnections)}
         </div>
       )
     } else {
