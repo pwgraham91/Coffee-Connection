@@ -7,6 +7,27 @@ import { Link } from 'react-router-dom';
 
 
 class Navigation extends React.Component {
+  rightSideButtons() {
+    if (window.user) {
+      return (
+        <div>
+          <Link to={`/profile/${window.user.id}`}><Button style={{
+            color: 'white'
+          }}>{ window.user.name }</Button></Link>
+          <a href="/logout">
+            <Button style={{
+              color: 'white'
+            }}>Logout</Button>
+          </a>
+        </div>
+      )
+    } else {
+      return (
+        <Button>Login</Button>
+      )
+    }
+  }
+
   render() {
     return (
       <div>
@@ -21,7 +42,7 @@ class Navigation extends React.Component {
                 FloSports Coffee Connection
               </Typography>
             </Link>
-            <Button color="inherit">Login</Button>
+            {this.rightSideButtons()}
           </Toolbar>
         </AppBar>
       </div>
