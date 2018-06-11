@@ -1,11 +1,15 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
+import WelcomeInfo from "./WelcomeInfo";
 
 class HomePage extends React.Component {
   render() {
     return (
-      <h1>FloSports Coffee Connection</h1>
+      <div>
+        <h1>FloSports Coffee Connection</h1>
+        <WelcomeInfo/>
+      </div>
     )
   }
 }
