@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { orderBy } from "lodash";
+import Connection from "./Connection";
 
 export default class ExistingConnections extends React.Component {
   listConnections(userId, connections) {
@@ -11,9 +12,9 @@ export default class ExistingConnections extends React.Component {
 
   renderConnection(userId, connection) {
     if (userId === connection.user_1.id) {
-      return <li key={connection.user_2.id}>{connection.user_2.name}</li>
+      return <Connection key={connection.user_2.id} user={connection.user_2} />
     } else {
-      return <li key={connection.user_1.id}>{connection.user_1.name}</li>
+      return <Connection key={connection.user_1.id} user={connection.user_1} />
     }
   }
 
@@ -22,7 +23,7 @@ export default class ExistingConnections extends React.Component {
       return (
         <div>
           <h3>Current Connection</h3>
-          <ul>{this.renderConnection(userId, connection)}</ul>
+          <div>{this.renderConnection(userId, connection)}</div>
         </div>
       )
     }
@@ -33,7 +34,10 @@ export default class ExistingConnections extends React.Component {
       return (
         <div>
           <h3>Previous Connections</h3>
-          <ul>{this.listConnections(this.props.userDetails.id, this.props.userDetails.connections)}</ul>
+          <div style={{
+            display: 'flex',
+            flexWrap: 'wrap'
+          }}>{this.listConnections(this.props.userDetails.id, connections)}</div>
         </div>
       )
     }
@@ -41,12 +45,12 @@ export default class ExistingConnections extends React.Component {
 
   render() {
     if (this.props.userDetails) {
-      const sortedConnections = orderBy(this.props.userDetails.connections, ['id'], ['desc']);
+      const sortedConnections = orderBy(this.props.userDetails.connections, ['id'], ['asc']);
       const currentConnection = sortedConnections.shift();
       return (
         <div>
           {this.renderCurrentConnection(this.props.userDetails.id, currentConnection)}
-          {this.renderPastConnections(this.props.userDetails.id, currentConnection)}
+          {this.renderPastConnections(this.props.userDetails.id, sortedConnections)}
         </div>
       )
     } else {
