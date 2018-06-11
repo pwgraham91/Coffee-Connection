@@ -50,7 +50,14 @@ export default class Connection extends React.Component {
   }
 }
 
-// Connection.propTypes = {
-//   userID: PropTypes.string,
-//   userDetails: PropTypes.object
-// };
+Connection.propTypes = {
+  user: PropTypes.shape({
+    params: PropTypes.shape({
+      active: PropTypes.bool,
+      avatar: PropTypes.string,
+      email: PropTypes.string,
+      id: PropTypes.number,
+      name: PropTypes.string
+    })
+  }),
+};
