@@ -23,7 +23,9 @@ class Navigation extends React.Component {
       )
     } else {
       return (
-        <Button>Login</Button>
+        <a href={window.authUrl}><Button style={{
+          color: 'white'
+        }}>Login</Button></a>
       )
     }
   }
