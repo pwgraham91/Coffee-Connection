@@ -42,3 +42,8 @@ In the root directory, make a file called config.py using example_config.py as a
 `python app/test/unittest_main.py`
 ### Test File
 `python path/to/file.py`
+
+### Docker
+docker build -t coffee-connection:1.0.0 .
+docker run -d -p 5000:5000/tcp coffee-connection:1.0.0
+find on localhost:5000
