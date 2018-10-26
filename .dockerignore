@@ -1,0 +1,3 @@
+venv
+app/static/node_modules
+app/static/js/react/node_modules
