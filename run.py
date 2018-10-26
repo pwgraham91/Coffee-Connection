@@ -10,4 +10,4 @@ app.config.update(
     SQLALCHEMY_MIGRATE_REPO=Config.SQLALCHEMY_MIGRATE_REPO
 )
 app.secret_key = Config.SECRET_KEY
-app.run(debug=True, threaded=True)
+app.run(host='0.0.0.0', debug=True, threaded=True)
